@@ -1,0 +1,69 @@
+using System;
+
+namespace Affine_Cipher
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string alpha = "abcdefghijklmnopqrstuvwxyz";
+            string message = Console.ReadLine();
+            int keyA = int.Parse(Console.ReadLine());
+            int keyB = int.Parse(Console.ReadLine());
+            Console.WriteLine(Encryption());
+            string Encryption()
+            {
+                string encryptedMessage = "";
+                foreach(char chr in message)
+                    for (int i = 0; i < alpha.Length; i++)
+                    {
+                        if (chr == alpha[i])
+                        {
+                            if (Char.IsUpper(chr))
+                            {
+                                encryptedMessage += Char.ToUpper(alpha[(i * keyA % alpha.Length + keyB) % 26]);
+                                break;
+                            }
+                            else
+                            {
+                                encryptedMessage += alpha[(i * keyA % alpha.Length + keyB) % 26];
+                                break;
+                            }
+                        }
+                        else if (chr == ' ')
+                        {
+                            encryptedMessage += " ";
+                            break;
+                        }
+                    }
+                return encryptedMessage;
+            }
+            string Decryption()
+            {
+                string decryptedMessage = "";
+                foreach (char chr in message)
+                    for (int i = 0; i < alpha.Length; i++)
+                    {
+                        if (chr == alpha[i])
+                        {
+                            if (Char.IsUpper(chr) && key > i)
+                                decryptedMessage += Char.ToUpper(alpha[26 + (i * keyA % alpha.Length + keyB) % 26]);
+                            else if (Char.IsUpper(chr) && key <= i)
+                                decryptedMessage += Char.ToUpper(alpha[i - key % 26]);
+                            else if (key > i)
+                                decryptedMessage += alpha[26 + (i - key % 26)];
+                            else
+                                decryptedMessage += alpha[Math.Abs(i - key % 26)];
+                        }
+                        else if (chr == ' ')
+                        {
+                            decryptedMessage += " ";
+                            break;
+                        }
+                    }
+                return decryptedMessage;
+            }
+        }
+    }
+}
+
