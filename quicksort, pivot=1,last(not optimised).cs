@@ -74,6 +74,7 @@ namespace testlol
                 Console.WriteLine($"Comparisons:{count[0]}");
             }
             //file.Close();
+            //Random pivot logic: divide the array by the pivot index and quicksort the two arrays; compare the first and last element of the halves to find which comes before the other
         }
     }
 }
