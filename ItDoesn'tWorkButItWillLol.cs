@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 
 namespace Affine_Cipher
 {
@@ -11,12 +10,7 @@ namespace Affine_Cipher
             string message = Console.ReadLine();
             int keyA = int.Parse(Console.ReadLine());
             int keyB = int.Parse(Console.ReadLine());
-            Console.WriteLine(Encryption());
-            string[] res = Decryption(Encryption());
-            foreach (string item in res)
-            {
-                Console.WriteLine(item);
-            }
+            Console.WriteLine(Decryption(Encryption()));
             string Encryption()
             {
                 string encryptedMessage = "";
@@ -44,34 +38,46 @@ namespace Affine_Cipher
                     }
                 return encryptedMessage;
             }
-            string[] Decryption(string message)
+            //int KeyBCheck()
             {
-                string[] decryptedMessages = new string[alpha.Length + 1];
-                for (int i1 = 0; i1 < alpha.Length + 1; i1++)
-                    foreach (char chr in message)
-                        for (int i = 0; i < alpha.Length; i++)
+                // should check if the sum of the multiplication part and the key is bigger than 26.
+            }
+            int KeyACheck(int multiplct)
+            {
+                int counter = 0;
+                while (true)
+                {
+                    if ((multiplct + 26 * counter) % keyA == 0)
+                        return counter;
+                }
+
+            }
+            string Decryption(string enMessage)
+            {
+                string decryptedMessage = "";
+                foreach (char chr in enMessage)
+                    for (int i = 0; i < alpha.Length; i++)
+                    {
+                        if (chr == alpha[i])
                         {
-                            if (chr == alpha[i])
+                            if (Char.IsUpper(chr))
                             {
-                                if (Char.IsUpper(chr))
-                                {
-                                    decryptedMessages[i1] += Char.ToUpper((alpha[(26 * i1 - keyB + 26 * i1) / keyA]));
-                                    break;
-                                }
-                                else
-                                {
-                                    if((26 * i1 - keyB + 26 * i1) / keyA < 26 && (26 * i1 - keyB + 26 * i1) / keyA > 0)
-                                        decryptedMessages[i1] += alpha[(26 * i1 - keyB + 26 * i1) / keyA];
-                                    break;
-                                }
+                                decryptedMessage += Char.ToUpper(alpha[KeyACheck(i - keyB % 26)]);
+                                break;
                             }
-                            else if (chr == ' ')
+                            else
                             {
-                                decryptedMessages[i1] += " ";
+                                decryptedMessage += alpha[KeyACheck(i - keyB % 26)];
                                 break;
                             }
                         }
-                return decryptedMessages;
+                        else if (chr == ' ')
+                        {
+                            decryptedMessage += " ";
+                            break;
+                        }
+                    }
+                return decryptedMessage;
             }
         }
     }
