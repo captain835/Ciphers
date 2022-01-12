@@ -8,9 +8,12 @@ namespace Affine_Cipher
         {
             string alpha = "abcdefghijklmnopqrstuvwxyz";
             string message = Console.ReadLine();
-            int keyA = int.Parse(Console.ReadLine());
-            int keyB = int.Parse(Console.ReadLine());
-            Console.WriteLine(Decryption(Encryption()));
+            int key = int.Parse(Console.ReadLine());
+            int keyA = key / message.Length;
+            int keyB = key % message.Length;
+            string encryptedMessage = Encryption();
+            Console.WriteLine(encryptedMessage);
+            Console.WriteLine(Decryption(encryptedMessage));
             string Encryption()
             {
                 string encryptedMessage = "";
@@ -38,9 +41,14 @@ namespace Affine_Cipher
                     }
                 return encryptedMessage;
             }
-            //int KeyBCheck()
+            int KeyBCheck(int multiplct)
             {
-                // should check if the sum of the multiplication part and the key is bigger than 26.
+                int add = 0;
+                if ((multiplct + keyB) % 26 != 0)
+                    add++;
+                if (multiplct + keyB > 26)
+                    return (multiplct + keyB) / 26 + add;
+                else return 0;
             }
             int KeyACheck(int multiplct)
             {
@@ -48,7 +56,8 @@ namespace Affine_Cipher
                 while (true)
                 {
                     if ((multiplct + 26 * counter) % keyA == 0)
-                        return counter;
+                        return (multiplct + 26 * counter) / keyA;
+                    counter++;
                 }
 
             }
@@ -62,12 +71,12 @@ namespace Affine_Cipher
                         {
                             if (Char.IsUpper(chr))
                             {
-                                decryptedMessage += Char.ToUpper(alpha[KeyACheck(i - keyB % 26)]);
+                                decryptedMessage += Char.ToUpper(alpha[KeyACheck(i - keyB % 26 + KeyBCheck(i - keyB % 26))]);
                                 break;
                             }
                             else
                             {
-                                decryptedMessage += alpha[KeyACheck(i - keyB % 26)];
+                                decryptedMessage += alpha[KeyACheck(i - keyB % 26 + KeyBCheck(i - keyB % 26))];
                                 break;
                             }
                         }
