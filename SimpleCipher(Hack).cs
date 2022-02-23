@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows;
 
-namespace Simple_Cipher
+namespace Simple_Cipher_5
 {
     class Program
     {
@@ -106,7 +106,7 @@ namespace Simple_Cipher
                 //if (!check)
                 //    Console.WriteLine("No matches found.");
 
-                for(int i = 0; i < Factorial(key.Length); i++)
+                for (int i = 0; i < Factorial(key.Length); i++)
                 {
                     string key = GenerateRandomKey();
                     string[] possibleMessage = DecryptMessage(key, message).Split();
@@ -121,10 +121,24 @@ namespace Simple_Cipher
                     Console.WriteLine(WordPattern(item));
                 }
             }
+            List<string> allPossibleVariations = new List<string>();
+            string possibleWord = "";
             string ReplaceWithPossibleVariations(string word)
             {
-
+                //make a looping system using reccursion that also checks for the pattern
             }
+            string ReccursiveLooping(ref string possibleWord, int level)
+            {
+                for (int i = 0; i < defAlphabet.Length; i++)
+                {
+                    possibleWord[level] = defAlphabet[i];
+                    allPossibleVariations.Add();
+                }
+            }
+            //bool CheckForPattern(string word)
+            //{
+
+            //}
             string WordPattern(string word)
             {
                 string res = "";
