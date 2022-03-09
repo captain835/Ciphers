@@ -19,8 +19,8 @@ namespace Simple_Cipher_5
                 Console.WriteLine(EncryptMessage(key, input));
             if (action == "decrypt")
                 Console.WriteLine(DecryptMessage(key, input));
-            if (action == "bf")
-                BruteForce(input);
+            //if (action == "bf")
+            //    BruteForce(input);
             if (action == "hack")
                 Hack();
             string EncryptMessage(string key, string message)
@@ -82,37 +82,37 @@ namespace Simple_Cipher_5
                 allKeys.Add(randomKey);
                 return randomKey;
             }
-            void BruteForce(string message)
-            {
-                ////setup library
-                //NetSpell.SpellChecker.Dictionary.WordDictionary oDict = new NetSpell.SpellChecker.Dictionary.WordDictionary();
-                //oDict.DictionaryFile = "en-US.dic";
-                //oDict.Initialize();
-                //NetSpell.SpellChecker.Spelling oSpell = new NetSpell.SpellChecker.Spelling();
-                ////oSpell.Dictionary = oDict;
+            //void BruteForce(string message)
+            //{
+            //    ////setup library
+            //    //NetSpell.SpellChecker.Dictionary.WordDictionary oDict = new NetSpell.SpellChecker.Dictionary.WordDictionary();
+            //    //oDict.DictionaryFile = "en-US.dic";
+            //    //oDict.Initialize();
+            //    //NetSpell.SpellChecker.Spelling oSpell = new NetSpell.SpellChecker.Spelling();
+            //    ////oSpell.Dictionary = oDict;
 
-                //bool check = false;
-                //while (check)
-                //{
-                //    string key = GenerateRandomKey();
-                //    string[] possibleMessage = DecryptMessage(key, message).Split();
-                //    foreach (string word in possibleMessage)
-                //        if (oSpell.TestWord(word))
-                //        {
-                //            check = true;
-                //            Console.WriteLine(possibleMessage.ToString());
-                //        }
-                //}
-                //if (!check)
-                //    Console.WriteLine("No matches found.");
+            //    //bool check = false;
+            //    //while (check)
+            //    //{
+            //    //    string key = GenerateRandomKey();
+            //    //    string[] possibleMessage = DecryptMessage(key, message).Split();
+            //    //    foreach (string word in possibleMessage)
+            //    //        if (oSpell.TestWord(word))
+            //    //        {
+            //    //            check = true;
+            //    //            Console.WriteLine(possibleMessage.ToString());
+            //    //        }
+            //    //}
+            //    //if (!check)
+            //    //    Console.WriteLine("No matches found.");
 
-                for (int i = 0; i < Factorial(key.Length); i++)
-                {
-                    string key = GenerateRandomKey();
-                    string[] possibleMessage = DecryptMessage(key, message).Split();
-                    Console.WriteLine(possibleMessage);
-                }
-            }
+            //    for (int i = 0; i < Factorial(key.Length); i++)
+            //    {
+            //        string key = GenerateRandomKey();
+            //        string[] possibleMessage = DecryptMessage(key, message).Split();
+            //        Console.WriteLine(possibleMessage);
+            //    }
+            //}
             void Hack()
             {
                 string[] message = input.Split(' ');
@@ -120,18 +120,19 @@ namespace Simple_Cipher_5
                 {
                     Console.WriteLine(WordPattern(item));
                 }
+                //Console.WriteLine(WordPattern(input));
             }
             List<string> allPossibleVariations = new List<string>();
             string possibleWord = "";
-            string ReplaceWithPossibleVariations(string word)
-            {
-                //make a looping system using reccursion that also checks for the pattern
-            }
-            string ReccursiveLooping(ref string possibleWord, int level)
+            //string ReplaceWithPossibleVariations(string word)
+            //{
+            //    //make a looping system using reccursion that also checks for the pattern
+            //}
+            string ReccursiveLooping(string sequence, int level) // level refers to the num of unique chars in a message            // loop through every possible variation of 1,2,3,4,5...level sequence and replace with chars
             {
                 for (int i = 0; i < defAlphabet.Length; i++)
                 {
-                    possibleWord[level] = defAlphabet[i];
+                    if(sequence.Contains(defAlphabet[i]))
                     allPossibleVariations.Add();
                 }
             }
