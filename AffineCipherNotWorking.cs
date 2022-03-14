@@ -8,10 +8,12 @@ namespace Affine_Cipher
         static void Main(string[] args)
         {
             string alpha = "abcdefghijklmnopqrstuvwxyz";
-            string message = Console.ReadLine();
-            int key = int.Parse(Console.ReadLine());
-            int keyA = key / message.Length;
-            int keyB = key % message.Length;
+            string message = Console.ReadLine(); 
+            int keyA = int.Parse(Console.ReadLine());
+            int keyB = int.Parse(Console.ReadLine());
+            //int key = int.Parse(Console.ReadLine());
+            //int keyA = key / message.Length;
+            //int keyB = key % message.Length;
             string encryptedMessage = Encryption();
             Console.WriteLine(encryptedMessage);
             Console.WriteLine(Decryption(encryptedMessage));
@@ -26,12 +28,12 @@ namespace Affine_Cipher
                         {
                             if (Char.IsUpper(chr))
                             {
-                                encryptedMessage += Char.ToUpper(alpha[((i * keyA) % message.Length + keyB) % 26]);
+                                encryptedMessage += Char.ToUpper(alpha[(i * keyA + keyB) % 26]);
                                 break;
                             }
                             else
                             {
-                                encryptedMessage += alpha[((i * keyA) % message.Length + keyB) % 26];
+                                encryptedMessage += alpha[(i * keyA + keyB) % 26];
                                 break;
                             }
                         }
@@ -45,8 +47,8 @@ namespace Affine_Cipher
             }
             string Decryption(string enMessage)
             {
-                // BigInteger.ModPow(a, n - 2, n)
                 string decryptedMessage = "";
+                int modInverse = ModInverse(keyA, 26);
                 foreach (char chr in enMessage)
                     for (int i = 0; i < alpha.Length; i++)
                     {
@@ -54,12 +56,18 @@ namespace Affine_Cipher
                         {
                             if (Char.IsUpper(chr))
                             {
-                                decryptedMessage += Char.ToUpper(alpha[(int)BigInteger.ModPow(keyA, message.Length - 2, message.Length)*(i - keyB)%26]);
+                                int a = i - keyB;
+                                if (i - keyB < 0)
+                                    a += 26;
+                                decryptedMessage += Char.ToUpper(alpha[modInverse * a % 26]);
                                 break;
                             }
                             else
                             {
-                                decryptedMessage += alpha[(int)BigInteger.ModPow(keyA, message.Length - 2, message.Length) * (i - keyB) % 26];
+                                int a = i - keyB;
+                                if (i - keyB < 0)
+                                    a += 26;
+                                decryptedMessage += alpha[modInverse * a % 26];
                                 break;
                             }
                         }
@@ -70,6 +78,13 @@ namespace Affine_Cipher
                         }
                     }
                 return decryptedMessage;
+            }
+            int ModInverse(int val1, int val2)
+            {
+                int counter = 1;
+                while(val1 * counter % val2 != val2%val1)
+                    counter++;
+                return counter;
             }
             //void BruteForce(string enMessage)
             //{
